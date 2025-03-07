@@ -1,75 +1,52 @@
-# Nuxt Minimal Starter
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=waving&height=200&color=gradient&text=Policast&section=header&reversal=false&textBg=false&fontSize=70&fontAlign=50&animation=fadeIn&fontAlignY=38&descSize=0"></p>
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/Framework-NUXT3-neongreen?logo=nuxt" />
+</p>
 
-## Setup
+> Description will follow at a later update.
 
-Make sure to install dependencies:
+## Installation
 
-```bash
-# npm
+```sh
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+## How to use
 
-Start the development server on `http://localhost:3000`:
+Start the development server on http://localhost:3000 with
 
-```bash
-# npm
+```sh
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+## Build
 
-Build the application for production:
+Build the application for production with
 
-```bash
-# npm
+```sh
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
+## Author
 
-```bash
-# npm
-npm run preview
+👤 **Dr. Thorben Jensen** <br>
+👤 **Katharina Hovestadt** <br>
+👤 **Martin Quassowski** <br>
+👤 **Luke Bölling** <br>
+👤 **Sarah McCarthy** <br>
+👤 **Mahboubeh Abdighara** <br>
+👤 **Toni Kleinfeld**
 
-# pnpm
-pnpm preview
+- 🏠 : https://muenster-interessierts.de/
+- Github: [@policast](https://github.com/policast)
 
-# yarn
-yarn preview
+## Show your support
 
-# bun
-bun run preview
-```
+Give a ⭐️ if you like this project!
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## 📝 License
+
+Copyright © 2025 [Policast](https://github.com/policast).<br />
+
+<p align="center"><img src="https://capsule-render.vercel.app/api?type=waving&height=200&color=gradient&section=footer&reversal=false&textBg=false&fontSize=70&fontAlign=50&animation=fadeIn&fontAlignY=38&descSize=0"></p>
