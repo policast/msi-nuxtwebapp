@@ -1,6 +1,7 @@
 <template>
     <div class="podcast-wrapper">
         <audioplayer/>
+        <audioplayer/>
     </div>
 </template>
 
@@ -12,5 +13,6 @@
     width: 90vw;
     padding: 24px 16px;
     border-radius: 20px;
+    flex-direction: column;
 }
 </style>

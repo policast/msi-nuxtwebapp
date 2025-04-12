@@ -1,23 +1,35 @@
-@use 'mixins' as m;
+@use "mixins" as m;
 
-*{
-    margin: 0;
-    scroll-behavior: smooth;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
 }
 
 .d-none {
-    display: none !important;
-  }
+  display: none !important;
+}
 
-  a{
-    text-decoration: none;
-  }
+a {
+  text-decoration: none;
+}
 
-  @keyframes grow {
-    from{
-      height: inherit;
-    } to {
-      height: fit-content;
-    }
+@keyframes grow {
+  0% {
+    height: 88px;
+    overflow: hidden;
   }
+  100% {
+    height: 300px;
+  }
+}
+
+@keyframes shrink {
+  0% {
+    height: 300px;
+    overflow: hidden;
+  }
+  100% {
+    height: 88px;
+  }
+}
