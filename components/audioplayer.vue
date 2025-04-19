@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref, watch, onMounted, onBeforeUnmount, computed } from 'vue';
 
 const playerOpen = ref(false);
 const previousState = ref(false);
@@ -18,6 +18,72 @@ function togglePlayer() {
 function onAnimationEnd() {
     animating.value = false;
 }
+
+
+// -----------------
+
+const props = defineProps<{
+    audioFiles: string[]
+}>();
+
+const audio = ref<HTMLAudioElement | null>(null);
+const currentIndex = ref(0);
+const isPlaying = ref(false);
+
+// Konstruiere die Audioquelle aus den Dateien
+const audioSrc = computed(() => {
+    if (props.audioFiles.length === 0) return '';
+    return `/audio/${props.audioFiles[currentIndex.value]}`; // Passe den Pfad an
+});
+
+function playNext() {
+    if (currentIndex.value < props.audioFiles.length - 1) {
+        currentIndex.value++;
+        if (isPlaying.value) {
+            // Kurze Verzögerung, um sicherzustellen, dass die Quelle gewechselt hat
+            setTimeout(() => {
+                audio.value?.play();
+            }, 100);
+        }
+    }
+}
+
+function handleEnded() {
+    playNext();
+}
+
+function togglePlay() {
+    if (!audio.value) return;
+
+    if (isPlaying.value) {
+        audio.value.pause();
+    } else {
+        audio.value.play();
+    }
+    isPlaying.value = !isPlaying.value;
+}
+
+// Audio-Element neu initialisieren, wenn sich die Dateiliste ändert
+watch(() => props.audioFiles, () => {
+    currentIndex.value = 0;
+    isPlaying.value = false;
+    if (audio.value) {
+        audio.value.load();
+    }
+}, { deep: true });
+
+onMounted(() => {
+    if (audio.value) {
+        audio.value.addEventListener('ended', handleEnded);
+    }
+});
+
+onBeforeUnmount(() => {
+    if (audio.value) {
+        audio.value.removeEventListener('ended', handleEnded);
+    }
+});
+
 </script>
 
 <template>
@@ -44,6 +110,20 @@ function onAnimationEnd() {
             <img class="next playerButton" src="../assets/images/skip.svg">
         </div>
     </div>
+
+    <template>
+    <div class="audio-player">
+        <audio ref="audio" :src="audioSrc" preload="auto"></audio>
+        
+        <div class="controls">
+            <button @click="togglePlay">{{ isPlaying ? 'Pause' : 'Play' }}</button>
+            <div class="file-info">
+                Spiele: {{ props.audioFiles[currentIndex] }}
+                ({{ currentIndex + 1 }}/{{ props.audioFiles.length }})
+            </div>
+        </div>
+    </div>
+</template>
 
 </template>
 
@@ -83,13 +163,13 @@ function onAnimationEnd() {
     padding: 10px;
     max-width: 80px;
     aspect-ratio: 1/1;
-    
-    &:active{
+
+    &:active {
         scale: 0.8;
     }
 }
 
-.next{
+.next {
     rotate: 180deg;
 }
 
@@ -108,13 +188,12 @@ function onAnimationEnd() {
 
     .weekAndThemes {
         justify-content: flex-start;
+
         .week {
             img {
                 rotate: 180deg;
             }
         }
-
-        .themes {}
     }
 }
 
@@ -123,7 +202,7 @@ function onAnimationEnd() {
 }
 
 .playStatus {
-    @include mix.center($jc: flex-start, $g:10px);
+    @include mix.center($jc: flex-start, $g: 10px);
     width: 95%;
     height: 20px;
 
@@ -139,7 +218,8 @@ function onAnimationEnd() {
         height: 20px;
         border: solid 2px black;
         border-radius: 15px;
-        .progress{
+
+        .progress {
             width: 55%;
             height: 90%;
             background-color: white;
@@ -148,7 +228,7 @@ function onAnimationEnd() {
     }
 }
 
-.controll-buttons{
+.controll-buttons {
     @include mix.center();
 }
 </style>

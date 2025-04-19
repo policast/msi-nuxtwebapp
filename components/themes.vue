@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
+
+const { state, audioFiles } = useAudioState();
 
 let themes = ref(["Wirtschaft",
     "Schulwesen",
@@ -21,6 +23,24 @@ const isThemeEnabled = (theme: string) => {
     return activeThemes.includes(theme);
 };
 
+watch(
+    checkedThemes,
+    (newVal) => {
+        localStorage.setItem('checkedThemes', JSON.stringify(newVal));
+    },
+    { deep: true },
+);
+
+const selectedActiveThemes = computed(() => {
+    return themes.value.filter((theme, index) =>
+        checkedThemes.value[index] && isThemeEnabled(theme)
+    );
+});
+
+watch(selectedActiveThemes, (newThemes) => {
+  state.value.selectedThemes = newThemes;
+}, { immediate: true });
+
 onMounted(() => {
     const saved = localStorage.getItem('checkedThemes');
 
@@ -33,13 +53,8 @@ onMounted(() => {
     }
 });
 
-watch(
-    checkedThemes,
-    (newVal) => {
-        localStorage.setItem('checkedThemes', JSON.stringify(newVal));
-    },
-    { deep: true },
-);
+
+
 </script>
 
 <template>

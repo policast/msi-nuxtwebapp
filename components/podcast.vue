@@ -1,7 +1,12 @@
+<script lang="ts" setup>
+const { state, audioFiles } = useAudioState();
+
+</script>
+
 <template>
     <div class="podcast-wrapper">
-        <audioplayer/>
-        <audioplayer/>
+        <audioplayer v-if="audioFiles.length > 0" :audio-files="audioFiles" />
+        <p v-else>Wähle mindestens ein Thema aus, um den Podcast zu hören.</p>
     </div>
 </template>
 
