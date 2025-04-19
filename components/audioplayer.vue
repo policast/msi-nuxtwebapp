@@ -83,6 +83,10 @@ function onAnimationEnd() {
     padding: 10px;
     max-width: 80px;
     aspect-ratio: 1/1;
+    
+    &:active{
+        scale: 0.8;
+    }
 }
 
 .next{
@@ -142,5 +146,9 @@ function onAnimationEnd() {
             border-radius: 15px;
         }
     }
+}
+
+.controll-buttons{
+    @include mix.center();
 }
 </style>

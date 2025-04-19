@@ -1,10 +1,54 @@
+<script lang="ts" setup>
+import { ref, onMounted, watch } from 'vue';
+
+let themes = ref(["Wirtschaft",
+    "Schulwesen",
+    "Finanzen & Haushalt",
+    "Bau & Stadtentwicklung",
+    "Verkehr & Mobilität",
+    "Soziales & Integration",
+    "Umwelt & Nachhaltigkeit",
+    "Sicherheit & Ordnung",
+    "Kultur & Freizeit",
+    "Gesundheit & Soziales",
+    "Digitalisierung & Verwaltung"]);
+
+const checkedThemes = ref<Record<number, boolean>>({});
+
+const activeThemes = ["Schulwesen", "Verkehr & Mobilität", "Umwelt & Nachhaltigkeit"];
+
+const isThemeEnabled = (theme: string) => {
+    return activeThemes.includes(theme);
+};
+
+onMounted(() => {
+    const saved = localStorage.getItem('checkedThemes');
+
+    if (saved) {
+        checkedThemes.value = JSON.parse(saved);
+    } else {
+        themes.value.forEach((_, index) => {
+            checkedThemes.value[index] = false;
+        });
+    }
+});
+
+watch(
+    checkedThemes,
+    (newVal) => {
+        localStorage.setItem('checkedThemes', JSON.stringify(newVal));
+    },
+    { deep: true },
+);
+</script>
+
 <template>
     <div class="themes-wrapper">
 
         <template v-for="(theme, index) in themes" :key="index">
             <input type="checkbox" :id="`${index}`" autocomplete="off" class="theme-checkbox d-none"
-                v-model="checkedThemes[index]">
-            <label class="theme-label" :for="`${index}`">
+                v-model="checkedThemes[index]" :disabled="!isThemeEnabled(theme)">
+            <label class="theme-label" :for="`${index}`" :class="{ 'disabled': !isThemeEnabled(theme) }">
                 {{ theme }}
             </label>
         </template>
@@ -47,43 +91,11 @@ input.theme-checkbox:checked+.theme-label::before {
     filter: invert(1);
     padding-right: 5px;
 }
+
+.theme-label.disabled {
+    background-color: grey;
+    opacity: 0.5;
+    color: white;
+    cursor: not-allowed;
+}
 </style>
-
-<script lang="ts" setup>
-import { ref, onMounted, watch } from 'vue';
-
-let themes = ref(["Wirtschaft",
-    "Schulwesen",
-    "Finanzen & Haushalt",
-    "Bau & Stadtentwicklung",
-    "Verkehr & Mobilität",
-    "Soziales & Integration",
-    "Umwelt & Nachhaltigkeit",
-    "Sicherheit & Ordnung",
-    "Kultur & Freizeit",
-    "Gesundheit & Soziales",
-    "Digitalisierung & Verwaltung"]);
-
-const checkedThemes = ref<Record<number, boolean>>({});
-
-onMounted(() => {
-    const saved = localStorage.getItem('checkedThemes');
-
-    if (saved) {
-        checkedThemes.value = JSON.parse(saved);
-    } else {
-        themes.value.forEach((_, index) => {
-            checkedThemes.value[index] = false;
-        });
-    }
-});
-
-watch(
-    checkedThemes,
-    (newVal) => {
-        localStorage.setItem('checkedThemes', JSON.stringify(newVal));
-    },
-    { deep: true },
-);
-
-</script>

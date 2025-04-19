@@ -3,19 +3,17 @@
         <h2>Über Münster Interessiert's</h2>
         <div class="about-video">
 
-            
-                <iframe class="ms-Hack-Video"
-                    src="https://www.youtube.com/embed/OuShG0X0udw?si=Gom9cHgs-deTD8iF&amp;start=2953"
-                    title="YouTube video player" frameborder="0" allow="accelerometer; 
+            <iframe class="ms-Hack-Video"
+                src="https://www.youtube.com/embed/OuShG0X0udw?si=Gom9cHgs-deTD8iF&amp;start=2953"
+                title="YouTube video player" frameborder="0" allow="accelerometer; 
     ; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-
-            <ul>
-                <li>Unserer Antrieb ist...</li>
-                <li>Wir suchen ...</li>
-                <li>Was brauchen wir..</li>
-            </ul>
+            <div class="about-us">
+                <p>Unserer Antrieb ist...</p>
+                <p>Wir suchen ...</p>
+                <p>Was brauchen wir..</p>
+            </div>
         </div>
 
         <div class="buttonreturntothemes"></div>
@@ -28,7 +26,7 @@
     flex-direction: column;
     background-color: #D9D9D9;
     width: 90vw;
-    padding: 24px 0;
+    padding: 24px;
     border-radius: 20px;
 }
 
@@ -39,16 +37,26 @@ h2 {
 }
 
 .about-video {
-    @include mix.center();
+    @include mix.center($jc: space-between);
+    width: 100%;
 
-    ul {
-        align-self: flex-start;
+    iframe{
+        width: 50%;
+    }
+
+    .about-us {
+        @include mix.center();
+        flex-direction: column;
+        text-align: center;
+        width: 50%;
     }
 }
 
 .ms-Hack-Video {
     width: 40vw;
     height: 40vh;
+    border: solid 2px black;
+    border-radius: 20px;
 }
 </style>
 
