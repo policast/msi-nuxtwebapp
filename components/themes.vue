@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { ref, onMounted, watch, computed } from 'vue';
 
-const { state, audioFiles } = useAudioState();
-
 let themes = ref(["Wirtschaft",
     "Schulwesen",
     "Finanzen & Haushalt",
@@ -37,9 +35,6 @@ const selectedActiveThemes = computed(() => {
     );
 });
 
-watch(selectedActiveThemes, (newThemes) => {
-  state.value.selectedThemes = newThemes;
-}, { immediate: true });
 
 onMounted(() => {
     const saved = localStorage.getItem('checkedThemes');

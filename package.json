@@ -15,7 +15,10 @@
     "vue-router": "latest"
   },
   "devDependencies": {
+    "nuxt-musicfyplayer": "^2.1.7",
     "sass-embedded": "^1.85.0",
-    "scss": "^0.2.4"
+    "scss": "^0.2.4",
+    "typescript": "^5.8.3",
+    "vue-tsc": "^2.2.10"
   }
 }

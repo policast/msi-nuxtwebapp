@@ -1,12 +1,25 @@
 <script lang="ts" setup>
-const { state, audioFiles } = useAudioState();
+const config = useMusicfyPlayer({
+    audio: {
+        provider: "dropbox",
+        preload: "none",
+        id: "soep3xvq8aee4eh6hcj4r",
+        rlkey: "g7sqo9y5zl3f69oxftzo5auc5"
+    },
+    image: {
+        src: "https://dimatis.music/images/reminiscences.jpg",
+        alt: "Dimatis - Reminiscences"
+    },
+    color: {
+        detect: true
+    }
+})
 
 </script>
 
 <template>
     <div class="podcast-wrapper">
-        <audioplayer v-if="audioFiles.length > 0" :audio-files="audioFiles" />
-        <p v-else>Wähle mindestens ein Thema aus, um den Podcast zu hören.</p>
+        <MusicfyPlayer :config="config" />
     </div>
 </template>
 
