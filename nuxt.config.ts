@@ -13,8 +13,4 @@ export default defineNuxtConfig({
       },
     },
   },
-  modules: ["nuxt-musicfyplayer"],
-  typescript: {
-    typeCheck: true,
-  },
 });

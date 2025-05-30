@@ -27,26 +27,11 @@ const episodes: Episode[] = [
     },
 ]
 
-const configs = episodes.map(ep =>
-    useMusicfyPlayer({
-        audio: {
-            provider: 'local',
-            src: ep.src,
-            type: 'audio/mpeg',
-            preload: 'auto'
-        },
-        image: ep.image,
-        ...baseConfig
-    })
-)
 </script>
 
 <template>
     <div class="podcast-wrapper space-y-6">
 
-        <div v-for="(cfg, idx) in configs" :key="idx" class="player-item">
-            <MusicfyPlayer :config="cfg" width="100%"/>
-        </div>
 
     </div>
 </template>
