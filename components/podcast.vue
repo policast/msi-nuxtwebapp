@@ -1,39 +1,66 @@
 <script setup lang="ts">
-interface Episode {
-    src: string
-    image: { src: string; alt: string }
+import { ref } from 'vue'
+import type { VuePlyr } from '@skjnldsv/vue-plyr'
+
+const plyrOptions = {
+    controls: [
+        'play',
+        'progress',
+        'current-time',
+        'mute',
+        'volume',
+        'settings'
+    ],
+    autoplay: false,
 }
 
-// Basis-Config, die für alle Player gleich bleibt
-const baseConfig = {
-    color: { detect: true }
-}
-
-// Episode-Daten
-const episodes: Episode[] = [
-    {
-        src: '/audio/episode_13857.mp3',
-        image: {
-            src: 'https://dimatis.music/images/reminiscences.jpg',
-            alt: 'Dimatis – Reminiscences'
-        }
-    },
-    {
-        src: '/audio/episode_14084.mp3',
-        image: {
-            src: 'https://dimatis.music/images/reminiscences.jpg',
-            alt: 'Dimatis – Another Track'
-        }
-    },
+const playlist = [
+    { title: 'Folge 1', src: '/audio/episode_13857.mp3' },
+    { title: 'Folge 2', src: '/audio/episode_14084.mp3' },
 ]
+
+const currentIndex = ref(0)
+const plyrComponent = ref<InstanceType<typeof VuePlyr> | null>(null)
+let plyrInstance: any = null
+
+function onReady(readyEvent: any) {
+
+    plyrInstance = readyEvent.detail.plyr
+
+    plyrInstance.source = {
+        type: 'audio',
+        sources: [{ src: playlist[0].src, type: 'audio/mp3' }]
+    }
+}
+
+function playTrack(idx: number) {
+    if (!plyrInstance) return
+    currentIndex.value = idx
+    plyrInstance.source = {
+        type: 'audio',
+        sources: [{ src: playlist[idx].src, type: 'audio/mp3' }]
+    }
+    plyrInstance.play()
+}
 
 </script>
 
 <template>
-    <div class="podcast-wrapper space-y-6">
 
+    <div class="podcast-wrapper">
+        <vue-plyr ref="plyrComponent" :options="plyrOptions" @ready="onReady">
+            <audio />
+        </vue-plyr>
+
+        <ul class="playlist">
+            <li v-for="(track, idx) in playlist" :key="idx" @click="playTrack(idx)"
+                :class="{ active: idx === currentIndex }">
+                {{ track.title }}
+            </li>
+        </ul>
 
     </div>
+
 </template>
 
 <style lang="scss" scoped>
@@ -46,15 +73,21 @@ const episodes: Episode[] = [
     border-radius: 20px;
 }
 
+.playlist {
+    list-style: none;
+    padding: 0;
+}
 
-// :deep(.mp__cover) {
-//   display: none !important;
-//   max-width: 50%;
-// }
+.playlist li {
+    cursor: pointer;
+    padding: 0.5em;
+}
 
-// :deep(.mp__box) {
-//   width: 100%;
-// }
+.playlist li.active {
+    font-weight: bold;
+}
 
-
+.plyr__controls {
+    border-radius: 15px;
+}
 </style>
