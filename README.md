@@ -6,13 +6,13 @@
 
 > Description will follow at a later update.
 
-## Installation
+## ⚙️ Setup Instructions
 
 ```sh
 npm install
 ```
 
-## How to use
+## 🚀 How to Use
 
 Start the development server on http://localhost:3000 with
 
