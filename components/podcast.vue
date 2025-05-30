@@ -15,8 +15,8 @@ const plyrOptions = {
 }
 
 const playlist = [
-    { title: 'Folge 1', src: '/audio/episode_13857.mp3' },
-    { title: 'Folge 2', src: '/audio/episode_14084.mp3' },
+    { src: '/audio/episode_13857.mp3', date: '28.04.2025', title: 'Kinder, Jugendliche und Familien' },
+    { src: '/audio/episode_14084.mp3', date: '27.04.2025', title: 'Kommission zur Förderung der Inklusion von Menschen mit Behinderung' },
 ]
 
 const currentIndex = ref(0)
@@ -48,24 +48,27 @@ function playTrack(idx: number) {
 <template>
 
     <div class="podcast-wrapper">
+
         <vue-plyr ref="plyrComponent" :options="plyrOptions" @ready="onReady">
             <audio />
         </vue-plyr>
 
-        <ul class="playlist">
-            <li v-for="(track, idx) in playlist" :key="idx" @click="playTrack(idx)"
+        <div class="playlist">
+            <div class="chapter" v-for="(track, idx) in playlist" :key="idx" @click="playTrack(idx)"
                 :class="{ active: idx === currentIndex }">
-                {{ track.title }}
-            </li>
-        </ul>
+                <span>{{ track.date }}</span>
+                <span>{{ track.title }}</span>
+            </div>
+        </div>
 
     </div>
 
 </template>
-
+<!-- TODO: li elemente so anpassen , mit Detail anzeigen der Folgen , evtl "Aktiv setzten" mit erweiterten Details , andere verkleinert mit Title  / Datum nur -->
 <style lang="scss" scoped>
 .podcast-wrapper {
     @include mix.center($g: 8px);
+    flex-direction: column;
     background-color: #D9D9D9;
     flex-wrap: wrap;
     width: 90vw;
@@ -74,20 +77,31 @@ function playTrack(idx: number) {
 }
 
 .playlist {
-    list-style: none;
-    padding: 0;
+    @include mix.center($g: 8px);
+    flex-direction: column;
+    width: 100%;
 }
 
-.playlist li {
+.chapter {
+    @include mix.center($jc: space-between, $g: 8px);
+    flex-direction: row;
     cursor: pointer;
-    padding: 0.5em;
+    padding: 0.5em 1.5em;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    background-color: white;
 }
 
-.playlist li.active {
+.active {
     font-weight: bold;
 }
 
-.plyr__controls {
-    border-radius: 15px;
+:deep(.plyr) {
+    max-width: 800px;
+    margin: 2rem auto;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
 </style>

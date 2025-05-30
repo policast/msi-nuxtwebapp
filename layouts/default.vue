@@ -8,12 +8,8 @@
             <Aboutus />
         </section>
 
-        <section class="pick-themes-section center">
-            <Themes />
-        </section>
-
         <section class="show-picked-podcasts center">
-            <Podcast/>
+            <Podcast />
         </section>
     </div>
 </template>
