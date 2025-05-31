@@ -8,10 +8,10 @@
 # cd public/audio
 # python transcribe_to_vtt.py
 
-import whisper
 import glob
 import os
 from typing import List, Dict, Any
+import whisper
 
 
 def fmt_timestamp(t: float) -> str:
@@ -28,7 +28,7 @@ def transcribe_to_vtt(audio_path: str, model: whisper.Whisper) -> None:
     mit Zeitmarkierungen für den jeweiligen Textabschnitt.
     """
     vtt_path = os.path.splitext(audio_path)[0] + ".vtt"
-    if os.path.exists('../subtitles/' + vtt_path):
+    if os.path.exists(vtt_path):
         print(f"⏩ Überspringe {audio_path} – .vtt bereits vorhanden.")
         return
 
@@ -57,7 +57,7 @@ def transcribe_to_vtt(audio_path: str, model: whisper.Whisper) -> None:
             end = fmt_timestamp(seg["end"])
             text = seg["text"].strip()
 
-            # f.write(f"{i}\n")
+            f.write(f"{i}\n")
             f.write(f"{start} --> {end}\n")
             f.write(f"{text}\n\n")
 

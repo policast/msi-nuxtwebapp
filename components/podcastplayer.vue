@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
 import type { VuePlyr } from '@skjnldsv/vue-plyr'
-import { useVTTParser } from '~/composables/useVTTParser'
 
 const plyrOptions = {
     controls: [
         'play',
         'progress',
         'current-time',
+        'duration',
         'mute',
         'volume',
         'settings'
@@ -38,10 +38,11 @@ const emit = defineEmits<{
 
 const { parseVTT, getCurrentCue, getAllText } = useVTTParser()
 
-const plyrComponent = ref<InstanceType<typeof VuePlyr> | null>(null)
+const plyrComponent = ref<any>(null)
 const currentTime = ref<number>(0)
 const cues = ref<VTTCue[]>([])
 const showFullText = ref<boolean>(false)
+const timeUpdateInterval = ref<number | null>(null)
 
 const currentCue = computed(() => {
     if (cues.value.length === 0) return null
@@ -55,11 +56,13 @@ const fullText = computed(() => {
 
 // Methods
 const onTimeUpdate = (event: any) => {
-    currentTime.value = event.detail.plyr.currentTime
-}
-
-const onPlayerReady = () => {
-    console.log('Player ist bereit')
+    try {
+        if (event?.target?.currentTime !== undefined) {
+            currentTime.value = event.target.currentTime
+        }
+    } catch (error) {
+        console.warn('Fehler beim Abrufen der aktuellen Zeit:', error)
+    }
 }
 
 const onTrackEnded = () => {
@@ -75,7 +78,6 @@ const loadVTTFile = async (vttSrc: string) => {
         const response = await fetch(vttSrc)
         const vttContent = await response.text()
         cues.value = parseVTT(vttContent)
-        console.log('VTT geladen:', cues.value.length, 'Cues gefunden')
     } catch (error) {
         console.error('Fehler beim Laden der VTT-Datei:', error)
         cues.value = []
@@ -105,8 +107,7 @@ onMounted(() => {
 
     <div class="podcast-player">
         <div class="audio-container">
-            <VuePlyr ref="plyrComponent" :options="plyrOptions" @timeupdate="onTimeUpdate" @loadeddata="onPlayerReady"
-                @ended="onTrackEnded">
+            <VuePlyr ref="plyrComponent" :options="plyrOptions" @timeupdate="onTimeUpdate" @ended="onTrackEnded">
                 <audio>
                     <source :src="currentTrack?.src" type="audio/mp3" />
                 </audio>
@@ -171,5 +172,4 @@ onMounted(() => {
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
 </style>
