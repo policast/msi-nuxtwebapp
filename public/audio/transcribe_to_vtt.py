@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# transcribe_to_vtt.py
 
 # Requirements
 # **FFmpeg**  and **openai-whisper**
@@ -29,7 +28,7 @@ def transcribe_to_vtt(audio_path: str, model: whisper.Whisper) -> None:
     mit Zeitmarkierungen für den jeweiligen Textabschnitt.
     """
     vtt_path = os.path.splitext(audio_path)[0] + ".vtt"
-    if os.path.exists(vtt_path):
+    if os.path.exists('../subtitles/' + vtt_path):
         print(f"⏩ Überspringe {audio_path} – .vtt bereits vorhanden.")
         return
 
@@ -58,7 +57,7 @@ def transcribe_to_vtt(audio_path: str, model: whisper.Whisper) -> None:
             end = fmt_timestamp(seg["end"])
             text = seg["text"].strip()
 
-            f.write(f"{i}\n")
+            # f.write(f"{i}\n")
             f.write(f"{start} --> {end}\n")
             f.write(f"{text}\n\n")
 
