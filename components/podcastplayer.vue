@@ -84,11 +84,10 @@ const loadVTTFile = async (vttSrc: string) => {
     }
 }
 
-// Watch for track changes
 watch(() => props.currentTrack, (newTrack) => {
     if (newTrack?.vtt) {
         loadVTTFile(newTrack.vtt)
-        // Reset current time when track changes
+
         currentTime.value = 0
         showFullText.value = false
     } else {
@@ -149,6 +148,7 @@ onMounted(() => {
 </template>
 
 <!-- TODO: li elemente so anpassen , mit Detail anzeigen der Folgen , evtl "Aktiv setzten" mit erweiterten Details , andere verkleinert mit Title  / Datum nur -->
+ <!-- TODO: Untertitel design / Einheitliche größe player und text reichweise, Text ansicht als volltext 'lesbarer' machen   -->
 
 <style lang="scss" scoped>
 .chapter {
