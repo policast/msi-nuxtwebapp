@@ -103,54 +103,57 @@ onMounted(() => {
 </script>
 
 <template>
-
-    <div class="podcast-player">
-        <div class="audio-container">
-            <VuePlyr ref="plyrComponent" :options="plyrOptions" @timeupdate="onTimeUpdate" @ended="onTrackEnded">
-                <audio>
-                    <source :src="currentTrack?.src" type="audio/mp3" />
-                </audio>
-            </VuePlyr>
-        </div>
-
-        <!-- Track Info -->
-        <div class="track-info" v-if="currentTrack">
-            <h3>{{ currentTrack.title }}</h3>
-            <p class="track-date">{{ currentTrack.date }}</p>
-        </div>
-
-        <div class="content-container">
-            <!-- Aktueller Text -->
-            <div class="current-text">
-                <h4>Aktueller Text:</h4>
-                <div class="text-display" v-if="currentCue">
-                    {{ currentCue.text }}
-                </div>
-                <div v-else class="no-text">
-                    Kein Text für aktuelle Position verfügbar
-                </div>
+    <div class="wrapper">
+        <div class="podcast-player">
+            <div class="audio-container">
+                <VuePlyr ref="plyrComponent" :options="plyrOptions" @timeupdate="onTimeUpdate" @ended="onTrackEnded">
+                    <audio>
+                        <source :src="currentTrack?.src" type="audio/mp3" />
+                    </audio>
+                </VuePlyr>
             </div>
 
-            <!-- Gesamter Text (optional anzeigen) -->
-            <div class="full-text" v-if="showFullText">
-                <h4>Gesamter Text:</h4>
-                <div class="text-display full">
-                    {{ fullText }}
-                </div>
+            <!-- Track Info -->
+            <div class="track-info" v-if="currentTrack">
+                <h3>{{ currentTrack.title }}</h3>
             </div>
 
-            <button @click="toggleFullText" class="toggle-btn">
-                {{ showFullText ? 'Gesamttext ausblenden' : 'Gesamttext anzeigen' }}
-            </button>
+            <div class="content-container">
+                <!-- Aktueller Text -->
+                <div class="current-text" v-if="showFullText">
+                    <h4>Aktueller Text:</h4>
+                    <div class="text-display" v-if="currentCue">
+                        {{ currentCue.text }}
+                    </div>
+                    <div v-else class="no-text">
+                        Kein Text für aktuelle Position verfügbar
+                    </div>
+                </div>
+
+                <!-- Gesamter Text (optional anzeigen) -->
+                <div class="full-text" v-else>
+                    <h4>Gesamter Audio Text:</h4>
+                    <div class="text-display full">
+                        {{ fullText }}
+                    </div>
+                </div>
+
+                <button @click="toggleFullText" class="toggle-btn">
+                    {{ showFullText ? 'Gesamttext anzeigen' : 'Gesamttext ausblenden' }}
+                </button>
+            </div>
         </div>
     </div>
-
 </template>
 
 <!-- TODO: li elemente so anpassen , mit Detail anzeigen der Folgen , evtl "Aktiv setzten" mit erweiterten Details , andere verkleinert mit Title  / Datum nur -->
- <!-- TODO: Untertitel design / Einheitliche größe player und text reichweise, Text ansicht als volltext 'lesbarer' machen   -->
+<!-- TODO: Untertitel design / Einheitliche größe player und text reichweise, Text ansicht als volltext 'lesbarer' machen   -->
 
 <style lang="scss" scoped>
+.wrapper {
+    width: 100%;
+}
+//  TODO: Schrift art aussuchen importieren.
 .chapter {
     @include mix.center($jc: space-between, $g: 8px);
     flex-direction: row;
@@ -171,5 +174,48 @@ onMounted(() => {
     margin: 2rem auto;
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+    font-size: 26px;
+
+}
+
+h4 {
+    margin: 20px 10px 20px 0;
+    font-size: 24px;
+}
+
+.track-info,
+.content-container {
+    @include mix.center();
+    flex-direction: column;
+    padding: 10px;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+button {
+    all: unset
+}
+
+.full {
+    letter-spacing: 1.5px;
+}
+
+.toggle-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: 2px solid black;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-left: auto;
+
+    &:hover{
+        cursor: pointer;
+        scale: 1.05;
+    }
 }
 </style>

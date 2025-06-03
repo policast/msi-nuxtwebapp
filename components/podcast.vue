@@ -39,13 +39,13 @@ const onTrackEnded = () => {
 
         <Podcastplayer :current-track="currentTrack" @track-ended="onTrackEnded" />
 
-        <ul class="playlist">
-            <li class="chapter" v-for="(track, idx) in playlist" :key="idx" @click="playTrack(idx)"
+        <div class="playlist">
+            <div class="chapter" v-for="(track, idx) in playlist" :key="idx" @click="playTrack(idx)"
                 :class="{ active: idx === currentIndex }">
                 <span>{{ track.date }}</span>
                 <span>{{ track.title }}</span>
-            </li>
-        </ul>
+            </div>
+        </div>
 
     </div>
 
@@ -77,12 +77,11 @@ const onTrackEnded = () => {
     padding: 0.5em 1.5em;
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 50%;
+    width: 100%;
     background-color: white;
 }
 
 .active {
     font-weight: bold;
 }
-
 </style>
