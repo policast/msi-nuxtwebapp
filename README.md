@@ -25,7 +25,7 @@ npm run dev
 Build the application for production with
 
 ```sh
-npm run build
+npx nuxi generate
 ```
 
 ## Author
