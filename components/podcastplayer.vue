@@ -33,7 +33,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-    trackEnded: []
+    trackEnded: [];
 }>()
 
 const { parseVTT, getCurrentCue, getAllText } = useVTTParser()
@@ -42,7 +42,6 @@ const plyrComponent = ref<any>(null)
 const currentTime = ref<number>(0)
 const cues = ref<VTTCue[]>([])
 const showFullText = ref<boolean>(false)
-const timeUpdateInterval = ref<number | null>(null)
 
 const currentCue = computed(() => {
     if (cues.value.length === 0) return null
@@ -54,7 +53,8 @@ const fullText = computed(() => {
     return getAllText(cues.value)
 })
 
-// Methods
+const timeUpdateInterval = ref<NodeJS.Timeout | null>(null)
+
 const onTimeUpdate = (event: any) => {
     try {
         if (event?.target?.currentTime !== undefined) {
@@ -65,7 +65,32 @@ const onTimeUpdate = (event: any) => {
     }
 }
 
+const startTimeTracking = () => {
+    if (timeUpdateInterval.value) {
+        clearInterval(timeUpdateInterval.value)
+    }
+
+    timeUpdateInterval.value = setInterval(() => {
+        if (plyrComponent.value?.player && !plyrComponent.value.player.paused) {
+            currentTime.value = plyrComponent.value.player.currentTime || 0
+        }
+    }, 100) 
+}
+
+const stopTimeTracking = () => {
+    if (timeUpdateInterval.value) {
+        clearInterval(timeUpdateInterval.value)
+        timeUpdateInterval.value = null
+    }
+}
+
+// Cleanup beim Unmount
+onUnmounted(() => {
+    stopTimeTracking()
+})
+
 const onTrackEnded = () => {
+    stopTimeTracking()
     emit('trackEnded')
 }
 
@@ -86,12 +111,32 @@ const loadVTTFile = async (vttSrc: string) => {
 
 watch(() => props.currentTrack, (newTrack) => {
     if (newTrack?.vtt) {
-        loadVTTFile(newTrack.vtt)
-
         currentTime.value = 0
         showFullText.value = false
+
+        if (plyrComponent.value?.player) {
+            plyrComponent.value.player.pause()
+
+            stopTimeTracking()
+
+            plyrComponent.value.player.source = {
+                type: 'audio',
+                sources: [{
+                    src: newTrack.src,
+                    type: 'audio/mp3'
+                }]
+            }
+
+            plyrComponent.value.player.once('loadeddata', () => {
+                loadVTTFile(newTrack.vtt)
+                startTimeTracking()
+            })
+        } else {
+            loadVTTFile(newTrack.vtt)
+        }
     } else {
         cues.value = []
+        stopTimeTracking()
     }
 }, { immediate: true })
 
@@ -100,11 +145,17 @@ onMounted(() => {
         loadVTTFile(props.currentTrack.vtt)
     }
 })
+
 </script>
 
 <template>
     <div class="wrapper">
         <div class="podcast-player">
+
+            <div class="track-info" v-if="currentTrack">
+                <h3>{{ currentTrack.title }}</h3>
+            </div>
+
             <div class="audio-container">
                 <VuePlyr ref="plyrComponent" :options="plyrOptions" @timeupdate="onTimeUpdate" @ended="onTrackEnded">
                     <audio>
@@ -113,33 +164,25 @@ onMounted(() => {
                 </VuePlyr>
             </div>
 
-            <!-- Track Info -->
-            <div class="track-info" v-if="currentTrack">
-                <h3>{{ currentTrack.title }}</h3>
-            </div>
-
             <div class="content-container">
                 <!-- Aktueller Text -->
-                <div class="current-text" v-if="showFullText">
+                <div class="text" v-if="!showFullText">
                     <h4>Aktueller Text:</h4>
                     <div class="text-display" v-if="currentCue">
                         {{ currentCue.text }}
                     </div>
-                    <div v-else class="no-text">
-                        Kein Text für aktuelle Position verfügbar
-                    </div>
                 </div>
 
                 <!-- Gesamter Text (optional anzeigen) -->
-                <div class="full-text" v-else>
+                <div class="text" v-else>
                     <h4>Gesamter Audio Text:</h4>
-                    <div class="text-display full">
+                    <div class="text-display">
                         {{ fullText }}
                     </div>
                 </div>
 
                 <button @click="toggleFullText" class="toggle-btn">
-                    {{ showFullText ? 'Gesamttext anzeigen' : 'Gesamttext ausblenden' }}
+                    {{ showFullText ? 'Gesamttext ausblenden' : 'Gesamttext anzeigen' }}
                 </button>
             </div>
         </div>
@@ -151,18 +194,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .wrapper {
-    width: 100%;
-}
-//  TODO: Schrift art aussuchen importieren.
-.chapter {
-    @include mix.center($jc: space-between, $g: 8px);
-    flex-direction: row;
-    cursor: pointer;
-    padding: 0.5em 1.5em;
-    border-radius: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 50%;
-    background-color: white;
+    width: 90%;
 }
 
 .active {
@@ -170,7 +202,7 @@ onMounted(() => {
 }
 
 :deep(.plyr) {
-    max-width: 800px;
+    max-width: 90%;
     margin: 2rem auto;
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -201,8 +233,9 @@ button {
     all: unset
 }
 
-.full {
-    letter-spacing: 1.5px;
+.text-display {
+    letter-spacing: 1.4px;
+    font-size: 18px;
 }
 
 .toggle-btn {
@@ -213,7 +246,7 @@ button {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     margin-left: auto;
 
-    &:hover{
+    &:hover {
         cursor: pointer;
         scale: 1.05;
     }

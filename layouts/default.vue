@@ -4,9 +4,9 @@
             <logo />
         </section>
 
-        <section class="about-us-section center">
+        <!-- <section class="about-us-section center">
             <Aboutus />
-        </section>
+        </section> -->
 
         <section class="show-picked-podcasts center">
             <Podcast />

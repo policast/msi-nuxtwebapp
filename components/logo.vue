@@ -3,7 +3,6 @@
         <img src="../assets/images/logo.svg">
         <h1>Münster Interessiert's</h1>
         <h3>Dein Info-Podcast aus dem Rat</h3>
-        <h4>Hier ist dein Podcast der Woche</h4>
 
     </div>
 </template>
@@ -29,14 +28,7 @@
         font-size: 30px;
         font-weight: 200;
         word-spacing: 12px;
-        letter-spacing: 8px;
-    }
-
-    h4 {
-        padding-top: 8px;
-        font-size: 25px;
-        font-weight: 400;
-        letter-spacing: 11px;
+        letter-spacing: 10px;
     }
 }
 </style>

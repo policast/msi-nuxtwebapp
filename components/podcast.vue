@@ -10,7 +10,7 @@ interface Track {
 }
 
 const playlist = ref<Track[]>([
-    { src: '/audio/episode_13857.mp3', date: '28.04.2025', title: 'Kinder, Jugendliche und Familien', vtt: '/audio/episode_13857.vtt' },
+    { src: '/audio/episode_13857.mp3', date: '21.11.2024', title: 'Kinder-, Jugend und Familienausschuss', vtt: '/audio/episode_13857.vtt' },
     { src: '/audio/episode_14084.mp3', date: '27.04.2025', title: 'Kommission zur Förderung der Inklusion von Menschen mit Behinderung', vtt: '/audio/episode_14084.vtt' },
 ])
 
@@ -26,7 +26,6 @@ const playTrack = (index: number) => {
 }
 
 const onTrackEnded = () => {
-    // Automatisch nächsten Track abspielen
     if (currentIndex.value < playlist.value.length - 1) {
         currentIndex.value++
     }
@@ -51,14 +50,12 @@ const onTrackEnded = () => {
 
 </template>
 
-<!-- TODO: li elemente so anpassen , mit Detail anzeigen der Folgen , evtl "Aktiv setzten" mit erweiterten Details , andere verkleinert mit Title  / Datum nur -->
-
 <style lang="scss" scoped>
 .podcast-wrapper {
     @include mix.center($g: 8px);
     flex-direction: column;
-    background-color: #D9D9D9;
     flex-wrap: wrap;
+    background-color: #D9D9D9;
     width: 90vw;
     padding: 24px 16px;
     border-radius: 20px;
@@ -68,6 +65,7 @@ const onTrackEnded = () => {
     @include mix.center($g: 8px);
     flex-direction: column;
     width: 100%;
+
 }
 
 .chapter {
@@ -77,11 +75,16 @@ const onTrackEnded = () => {
     padding: 0.5em 1.5em;
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 100%;
+    width: 90%;
     background-color: white;
+    min-height: 70px;
 }
 
 .active {
-    font-weight: bold;
+    span {
+        font-weight: 700;
+    }
+
+    border: 2px dotted black;
 }
 </style>
