@@ -65,7 +65,8 @@ const onTrackEnded = () => {
     @include mix.center($g: 8px);
     flex-direction: column;
     width: 100%;
-
+    padding: 0px 15px;
+    margin-top: 50px;
 }
 
 .chapter {
@@ -75,7 +76,7 @@ const onTrackEnded = () => {
     padding: 0.5em 1.5em;
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 90%;
+    width: 100%;
     background-color: white;
     min-height: 70px;
 }
