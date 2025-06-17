@@ -68,9 +68,9 @@ def main() -> None:
     print("🚀 Lade Whisper-Modell...")
     model = whisper.load_model("small")  # Alternativen: "medium", "large"
 
-    audio_files = glob.glob("episode_*.mp3")
+    audio_files = glob.glob("episode*.mp3")
     if not audio_files:
-        print("❌ Keine MP3-Dateien im Format 'episode_*.mp3' gefunden.")
+        print("❌ Keine MP3-Dateien im Format 'episode*.mp3' gefunden.")
         return
 
     print(f"🎧 Gefundene Dateien: {len(audio_files)}")
