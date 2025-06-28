@@ -12,6 +12,7 @@ interface Track {
 const playlist = ref<Track[]>([
     { src: '/audio/episode_13857.mp3', date: '21.11.2024', title: 'Kinder-, Jugend und Familienausschuss', vtt: '/audio/episode_13857.vtt' },
     { src: '/audio/episode_14084.mp3', date: '27.04.2025', title: 'Kommission zur Förderung der Inklusion von Menschen mit Behinderung', vtt: '/audio/episode_14084.vtt' },
+    { src: '/audio/episode.mp3', date: '18.06.2025', title: 'Ausschusses für Verkehr und Mobilität', vtt: '/audio/episode.vtt' },
 ])
 
 const currentIndex = ref(0)
@@ -59,13 +60,18 @@ const onTrackEnded = () => {
     width: 90vw;
     padding: 24px 16px;
     border-radius: 20px;
+    max-width: 1080px;
+
+    @media (max-width: 475px) {
+        padding: 16px 8px;
+    }
 }
 
 .playlist {
     @include mix.center($g: 8px);
     flex-direction: column;
     width: 100%;
-
+    margin-top: 50px;
 }
 
 .chapter {
@@ -75,14 +81,24 @@ const onTrackEnded = () => {
     padding: 0.5em 1.5em;
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 90%;
+    width: 100%;
     background-color: white;
     min-height: 70px;
+
+    span {
+        @media (max-width: 475px) {
+            font-size: 14px;
+        }
+    }
 }
 
 .active {
     span {
         font-weight: 700;
+
+        @media (max-width: 475px) {
+            font-size: 15px;
+        }
     }
 
     border: 2px dotted black;

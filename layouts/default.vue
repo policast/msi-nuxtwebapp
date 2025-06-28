@@ -1,13 +1,10 @@
 <template>
-    <div>
+    <nav>
         <section class="logo-section">
             <logo />
         </section>
-
-        <!-- <section class="about-us-section center">
-            <Aboutus />
-        </section> -->
-
+    </nav>
+    <div>
         <section class="show-picked-podcasts center">
             <Podcast />
         </section>
