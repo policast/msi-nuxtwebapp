@@ -10,13 +10,13 @@
 
 <style lang="scss" scoped>
 .logo-wrapper {
-    @include mix.center($g:10px);
+    @include mix.center($g: 10px);
     flex-direction: row;
-    padding: 15px ;
+    padding: 15px;
     margin-top: 10px;
 
-    .logo-text-wrapper{
-        @include mix.center($jc:flex-start,  $ai:flex-start);
+    .logo-text-wrapper {
+        @include mix.center($jc: flex-start, $ai: flex-start);
         flex-direction: column;
     }
 
@@ -38,6 +38,23 @@
         word-spacing: 5px;
         letter-spacing: 8px;
     }
+
+    @media (max-width: 475px) {
+
+        padding: 12px;
+        margin-top: 0;
+
+        h1 {
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        h3 {
+            font-size: 18px;
+            letter-spacing: 2px;
+            word-spacing: unset;
+             margin-top: unset;
+        }
+    }
 }
-//TODO: reposiv media 
 </style>

@@ -61,6 +61,10 @@ const onTrackEnded = () => {
     padding: 24px 16px;
     border-radius: 20px;
     max-width: 1080px;
+
+    @media (max-width: 475px) {
+        padding: 16px 8px;
+    }
 }
 
 .playlist {
@@ -80,11 +84,21 @@ const onTrackEnded = () => {
     width: 100%;
     background-color: white;
     min-height: 70px;
+
+    span {
+        @media (max-width: 475px) {
+            font-size: 14px;
+        }
+    }
 }
 
 .active {
     span {
         font-weight: 700;
+
+        @media (max-width: 475px) {
+            font-size: 15px;
+        }
     }
 
     border: 2px dotted black;

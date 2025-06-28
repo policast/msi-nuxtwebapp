@@ -237,8 +237,8 @@ h3 {
 }
 
 h4 {
-    margin: 20px 10px 20px 0;
     font-size: 24px;
+    font-weight: 500
 }
 
 .track-info {
@@ -297,6 +297,7 @@ button {
 .toggle-btn {
     padding: 10px 20px;
     border: 2px solid black;
+    background-color: white;
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
@@ -308,5 +309,33 @@ button {
 
 @media (max-width: 475px) {
 
+    .player-title-wrapper {
+        div {
+            width: 100%;
+
+            min-height: 250px;
+            min-width: unset;
+
+            h3 {
+                text-align: center;
+                -webkit-text-stroke: 1.5px black;
+                color: white;
+            }
+        }
+
+        .audio-container {
+            padding: 0;
+        }
+
+    }
+
+    h4 {
+        font-size: 18px;
+    }
+
+    .text-display {
+        font-size: 14px;
+        letter-spacing: unset;
+    }
 }
 </style>
