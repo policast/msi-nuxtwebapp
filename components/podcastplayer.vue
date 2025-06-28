@@ -193,28 +193,28 @@ onMounted(() => {
     </div>
 </template>
 
-<!-- TODO: extra button für show subtitle , ein für vollen text , max 1 aktiv , wenn beide nicht aktiv -> hide content-container -->
-<!-- TODO: Untertitel design / Einheitliche größe player und text, Text ansicht als volltext 'lesbarer' machen   -->
-
 <style lang="scss" scoped>
 .wrapper {
     @include mix.center($g: 20px);
     flex-direction: column;
+    flex-wrap: wrap;
     width: 100%;
-    padding: 0 15px;
 }
 
 .player-title-wrapper {
-    @include mix.center($jc: space-between);
+    @include mix.center($jc: space-around);
     width: 100%;
+    flex-wrap: wrap;
 
     div {
-        width: 48%;
+        width: 50%;
         height: 35vh;
         max-height: 350px;
+        min-height: 250px;
+        min-width: 400px;
 
         h3 {
-            max-width: 60%;
+            text-align: center;
             -webkit-text-stroke: 1.5px black;
             color: white;
         }
@@ -226,7 +226,6 @@ onMounted(() => {
 }
 
 :deep(.plyr) {
-    max-width: 95%;
     margin: 1.5rem auto;
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -242,18 +241,48 @@ h4 {
     font-size: 24px;
 }
 
-.track-info,
+.track-info {
+    @include mix.center();
+
+    flex-direction: column;
+    padding: 10px;
+    background-image: url('assets/images/podcast.jpg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: 5px solid white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
 .content-container {
     @include mix.center();
-    flex-direction: column;
     padding: 10px;
     background-color: white;
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+
+.audio-container {
+    @include mix.center();
+    flex-direction: column;
+    min-width: 400px;
+    padding: 10px;
+}
+
 .content-container {
     width: 100%;
+}
+
+.text {
+    @include mix.center($g: 10px);
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 button {
@@ -266,16 +295,18 @@ button {
 }
 
 .toggle-btn {
-    margin-top: 10px;
     padding: 10px 20px;
     border: 2px solid black;
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin-left: auto;
 
     &:hover {
         cursor: pointer;
         scale: 1.05;
     }
+}
+
+@media (max-width: 475px) {
+
 }
 </style>
