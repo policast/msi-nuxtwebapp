@@ -10,9 +10,9 @@ interface Track {
 }
 
 const playlist = ref<Track[]>([
-    { src: '/audio/episode_13857.mp3', date: '21.11.2024', title: 'Kinder-, Jugend und Familienausschuss', vtt: '/audio/episode_13857.vtt' },
-    { src: '/audio/episode_14084.mp3', date: '27.04.2025', title: 'Kommission zur Förderung der Inklusion von Menschen mit Behinderung', vtt: '/audio/episode_14084.vtt' },
-    { src: '/audio/episode.mp3', date: '18.06.2025', title: 'Ausschusses für Verkehr und Mobilität', vtt: '/audio/episode.vtt' },
+    { src: 'audio/episode_13857.mp3', date: '21.11.2024', title: 'Kinder-, Jugend und Familienausschuss', vtt: 'audio/episode_13857.vtt' },
+    { src: 'audio/episode_14084.mp3', date: '27.04.2025', title: 'Kommission zur Förderung der Inklusion von Menschen mit Behinderung', vtt: 'audio/episode_14084.vtt' },
+    { src: 'audio/episode.mp3', date: '18.06.2025', title: 'Ausschusses für Verkehr und Mobilität', vtt: 'audio/episode.vtt' },
 ])
 
 const currentIndex = ref(0)
