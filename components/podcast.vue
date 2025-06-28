@@ -95,12 +95,12 @@ const onTrackEnded = () => {
 .active {
     span {
         font-weight: 700;
+        border: 2px dotted black;
 
         @media (max-width: 475px) {
             font-size: 15px;
         }
     }
 
-    border: 2px dotted black;
 }
 </style>
