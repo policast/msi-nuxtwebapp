@@ -84,23 +84,23 @@ const onTrackEnded = () => {
     width: 100%;
     background-color: white;
     min-height: 70px;
+}
 
-    span {
-        @media (max-width: 475px) {
-            font-size: 14px;
-        }
+span {
+    @media (max-width: 475px) {
+        font-size: 14px;
     }
 }
 
 .active {
+    border: 2px dotted black;
+
     span {
         font-weight: 700;
-        border: 2px dotted black;
 
         @media (max-width: 475px) {
             font-size: 15px;
         }
     }
-
 }
 </style>
